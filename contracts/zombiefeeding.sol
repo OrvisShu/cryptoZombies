@@ -22,7 +22,7 @@ contract ZombieFeeding is ZombieFactory {
 
     KittyInterface kittyContract;
 
-    modifier ownerOf(uint _zombieId) {
+    modifier onlyOwnerOf(uint _zombieId) {
         require(msg.sender == zombieToOwner[_zombieId]);
         _;
     }
@@ -40,7 +40,7 @@ contract ZombieFeeding is ZombieFactory {
     }
 
 
-    function feeAndMultiply(uint256 _zombieId, uint256 _targetDna, string memory _species) internal ownerOf(_zombieId) {
+    function feeAndMultiply(uint256 _zombieId, uint256 _targetDna, string memory _species) internal onlyOwnerOf(_zombieId) {
         Zombie storage myZombie = zombies[_zombieId];
         _targetDna = _targetDna % dnaModulus;
         require(_isReady(myZombie));
